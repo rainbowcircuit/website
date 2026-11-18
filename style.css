@@ -1,0 +1,185 @@
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: #fefdff;
+    margin: 0;
+}
+
+p {
+    font-size: 16px
+}
+
+h2 {
+    font-weight: 400;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+hr {
+    color: #eeeeee;
+}
+
+.hero {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.hero-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 20px 0;
+    box-sizing: border-box;
+}
+
+.page--wide {
+    max-width: 910px;
+}
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 800px;
+}
+
+.site-header rc-menu {
+    width: 300px;
+}
+
+.card-img,
+#about {
+    display: block;
+    border-radius: 0px;
+}
+
+.card-img {
+    width: 100%;
+    height: auto;
+}
+
+.card-caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 12px;
+    margin-bottom: 60px;
+}
+
+.card-caption > * {
+    margin-top: 0;
+}
+
+.card-caption > p:last-child {
+    text-align: right;
+}
+
+.card-info h1 {
+    margin: 0 0 6px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+}
+
+.card-info .price {
+    font-weight: 300;
+}
+
+.card-info p,
+.card-meta p {
+    margin: 0;
+}
+
+.card-meta {
+    text-align: right;
+}
+
+.layout {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.layout--stacked {
+    flex-direction: column;
+}
+
+.layout > section {
+    flex: 1;
+    min-width: 0;
+}
+
+.layout > .intro {
+    flex: 0 0 300px;
+}
+
+.intro {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-self: stretch;
+}
+
+.feature > :last-child {
+    margin-bottom: 0;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.cards > section {
+    min-width: 0;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 120px;
+    padding: 64px 0 96px;
+    border-top: 1px solid #eeeeee;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer .links {
+    display: flex;
+    gap: 32px;
+}
+
+.page img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 64px 0;
+}
+
+.button-row + footer {
+    margin-top: 0;
+}

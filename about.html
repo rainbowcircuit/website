@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Rainbow Circuit | Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="page">
+        <main class="layout layout--stacked">
+            <header class="site-header">
+                <rc-home size="80"></rc-home>
+                <rc-menu size="40" hide-text></rc-menu>
+            </header>
+
+            <canvas id="about" width="800" height="300"></canvas>
+            <p style="width: 800px">
+                Rainbow Circuit ideates, codes and publishes instruments that propel creative technology, multiply musical colors, and
+                realize new potential for form. <br><br>
+                
+                We're interested in the design choices that charge an instrument with potential: choices that suggest anew and elevate
+                the experience of making music.<br><br>
+                
+                Emphasis is placed on both form and function — an instrument should sound fantastic, and its visual form also be designed
+                to be understood.<br><br>
+                
+                Rainbow Circuit is Takuma Matsui, a designer and musician based in Providence, Rhode Island.
+            </p>
+        </main>
+
+        <footer>
+            <p>&copy;2026 Rainbow Circuit</p>
+            <div class="links">
+                <a href="apple.com">Instagram</a>
+                <a href="apple.com">Youtube</a>
+                <a href="apple.com">Email</a>
+            </div>
+        </footer>
+    </div>
+
+    <script type="module" src="./shared/navigation.js"></script>
+    <script type="module">
+        await document.fonts.load("55px Outfit")
+
+        const canvas = document.getElementById("about");
+        const ctx = canvas.getContext("2d");
+        const w = canvas.width, h = canvas.height
+
+        const dpr = Math.max(window.devicePixelRatio || 1, 2)
+        canvas.style.width = `${w}px`
+        canvas.style.height = `${h}px`
+        canvas.width = w * dpr
+        canvas.height = h * dpr
+        ctx.scale(dpr, dpr)
+        
+        let mouse = { state: 'idle', x: 0, y: 0, prevX: 0, prevY: 0, isClicked: false }        
+        const text = "Building a Circuit of Imagination:"
+        const colors = ['#E27B78', '#E09D75', '#E3B745', '#78E280', '#ABCEE1', '#787BE2', '#BB78E2']
+
+
+        class Vector {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+
+            add(v){
+                this.x = this.x + v.x
+                this.y = this.y + v.y
+            }
+
+            mult(d){
+                this.x = this.x * d
+                this.y = this.y * d
+            }
+        }
+
+        class Character {
+            constructor(letter, x, y) {
+                this.letter = letter
+                this.origin = new Vector(x, y)
+                this.pos = new Vector(x, y)
+                this.vel = new Vector(0, 0)
+                this.accel = new Vector(0, 0)
+            }
+
+            reset() {
+                this.pos.x = this.origin.x
+                this.pos.y = this.origin.y
+            }
+
+            push(fx, fy) {
+                this.accel.x += fx
+                this.accel.y += fy
+            }
+
+            update() {
+                this.pos.add(this.vel)
+                if (this.pos.x >= w - fontSize || this.pos.x < fontSize) {
+                    this.vel.mult(-1)
+                }
+                if (this.pos.y >= h - fontSize || this.pos.y < fontSize) {
+                    this.vel.mult(-1)
+                }
+
+                this.pos.add(this.vel)
+                this.vel.add(this.accel)
+                this.vel.mult(0.95) // friction so motion settles
+                this.accel.mult(0.85)
+            }
+
+            draw(ctx) {
+                ctx.font = font
+                ctx.fillText(this.letter, this.pos.x, this.pos.y)
+            }
+        }
+
+        let fontSize = 35
+        ctx.font = ` ${fontSize}px Outfit, sans-serif`
+        const naturalWidth = ctx.measureText(text).width
+        if (naturalWidth > w * 0.9) {
+            fontSize = Math.floor(fontSize * (w * 0.9) / naturalWidth)
+        }
+        const font = `${fontSize}px Outfit, sans-serif`
+        ctx.font = font
+
+        const totalWidth = ctx.measureText(text).width
+        const startX = (w - totalWidth) / 2
+        ctx.textBaseline = 'middle'
+        const chars = []
+        for(let i = 0; i < text.length; i++){
+            const x = startX + ctx.measureText(text.slice(0, i)).width
+            const y = h / 2
+            chars.push(new Character(text[i], x, y))
+        }
+
+        const draw = () => {
+            ctx.clearRect(0, 0, w, h)
+
+            for (const char of chars) {
+                char.draw(ctx)
+                char.update()
+            }
+        }
+
+        const tick = () => {
+            draw()
+            requestAnimationFrame(tick)
+        }
+        tick();
+
+        canvas.addEventListener("mousedown", (e) => {
+            for (const char of chars){
+                char.reset()
+                char.vel.x = (Math.random() - 0.5) * 0.5
+                char.vel.y = (Math.random() - 0.5) * 0.5
+            }
+            mouse.state = 'drag'
+            mouse.prevX = e.offsetX
+            mouse.prevY = e.offsetY
+        })
+
+        canvas.addEventListener("mousemove", (e) => {
+            const x = e.offsetX, y = e.offsetY
+            if (mouse.state === 'drag'){
+                const strength = 0.005
+                for (const char of chars) {
+                    char.push((x - mouse.prevX) * strength, (y - mouse.prevY) * strength)
+                }
+            }
+            mouse.prevX = x
+            mouse.prevY = y
+        })
+
+        window.addEventListener("mouseup", (e) => {
+            mouse.state = 'idle'
+        })
+
+    </script>
+</body>
+</html>
