@@ -1,10 +1,11 @@
 import { LitElement, html, css } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm'
-import { drawManual, drawBuy } from './drawing.js'
+import { drawManual, drawBuy, drawDemo } from './drawing.js'
 
 // Icons available to <rc-button icon="...">.
 const icons = {
     manual: drawManual,
     buy: drawBuy,
+    demo: drawDemo,
 }
 
 class Button extends LitElement {
@@ -49,6 +50,7 @@ class Button extends LitElement {
         .label {
             margin: 0 0 4px;
             font-size: 16px;
+            white-space: nowrap;
         }
 
         canvas {
@@ -70,7 +72,7 @@ class Button extends LitElement {
             <canvas width=${this.size} height=${this.size}></canvas>
         `
         return this.href
-            ? html`<a class="button" href=${this.href} style="color: ${this.isDark ? "white" : "black"}">${content}</a>`
+            ? html`<a class="button" href=${this.href} target="_blank" rel="noopener" style="color: ${this.isDark ? "white" : "black"}">${content}</a>`
             : html`<button class="button" type="button" style="color: ${this.isDark ? "white" : "black"}">${content}</button>`
     }
 }

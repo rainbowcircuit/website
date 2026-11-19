@@ -1,70 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Rainbow Circuit | Petal</title>
+    <meta name="description" content="Petal is a pitch-shifting multi-tap delay plug-in.">
+    <link rel="icon" href="../images/brand/logo_32.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css?v=5">
+    <link rel="stylesheet" href="../style.css?v=6">
 </head>
-<body>
+<body class="device">
     <header class="hero-nav">
         <rc-home is-dark href="../index.html" size="80"></rc-home>
-        <rc-menu is-dark hide-text width="260px" size="40"></rc-menu>
+        <rc-menu is-dark hide-text size="40"></rc-menu>
     </header>
-    <img src="../images/petal/petal_horizontal.png" class="hero">
+    <picture class="hero-picture">
+        <source media="(max-width: 600px)" srcset="../images/webp/petal/petal_vertical.webp">
+        <img src="../images/webp/petal/petal_horizontal.webp" class="hero" alt="Petal">
+    </picture>
 
     <section class="page">
         <p>
-            Petal is a pitch-shifting multi-tap delay plug-in. <br ><br>
-            
+            Petal is a pitch-shifting multi-tap delay plug-in. <br><br>
+
             Building on guitar pedal-like simplicity, Petal allows the musician to flutter form out from a handful of notes, or
             bathe in the fountain of arpeggiated feedback. <br><br>
-            
+
             Originally in the realm of Max for Live, this Petal adds a dedicated plate reverb, a decisively analog-style pitch
             shifter, and controls for more color and character. <br><br>
-            
-            Welcome to the garden of earthly delays. <br><br>
+
+            Welcome to the garden of earthly delays.
         </p>
 
-        <img src="../images/petal/tap.png">
+        <img src="../images/webp/petal/tap.webp" alt="Petal's multi-tap delay editor">
         <h2>Skip of the Rocks</h2>
         <p>
             The heart of petal is the pitch-shifting multi-tap delay. Petal pulls a single note apart into complex rhythms and pitch
             contours. A simple click and drag interface makes it easy to run into surprises, wherever you turn. <br><br>
-            
-            A dedicated delay line, separate from the main tap delay, lets Petal to sing over and over again. <br><br>
+
+            A dedicated delay line, separate from the main tap delay, lets Petal to sing over and over again.
         </p>
 
-        <img src="../images/petal/reverb.png">
-
+        <img src="../images/webp/petal/reverb.webp" alt="Petal's plate reverb controls">
         <h2>Lost in the Woods</h2>
         <p>
-        Petal's lush plate reverb algorithm adds increased blend and spread to the tap delay. Individual taps can be sent to the
-        reverb in parallel, pulling some taps into focus and others blurred away. <br><br>
-        
-        The delay and reverb levels can be set individually, allowing for subtle flicker of reverb in the background, or a
-        washed-out no-delay, reverb only texture.
+            Petal's lush plate reverb algorithm adds increased blend and spread to the tap delay. Individual taps can be sent to the
+            reverb in parallel, pulling some taps into focus and others blurred away. <br><br>
+
+            The delay and reverb levels can be set individually, allowing for subtle flicker of reverb in the background, or a
+            washed-out no-delay, reverb only texture.
+        </p>
+
+        <p class="requirements">
+            Minimum Requirements:<br>
+            Windows: Windows 10 or 11<br>
+            Mac: macOS 10.14 or newer
         </p>
 
         <div class="button-row">
-            <rc-button label="Manual" icon="manual"></rc-button>
-            <rc-button label="Buy" icon="buy" price="$29"></rc-button>
+            <rc-button label="Manual" icon="manual" href="https://cdn.prod.website-files.com/6240a005ce456341fca9aab7/6a8895dbc8584ed23ea77120_petal_user_guide.pdf"></rc-button>
+            <rc-button label="Buy" icon="buy" price="$48" href="https://rainbowcircuit.lemonsqueezy.com/checkout/buy/d3638aad-cb57-4bd6-a14d-2aa723c3b112"></rc-button>
         </div>
 
         <footer>
             <p>&copy;2026 Rainbow Circuit</p>
             <div class="links">
-                <a href="apple.com">Instagram</a>
-                <a href="apple.com">Youtube</a>
-                <a href="apple.com">Email</a>
+                <a href="https://www.instagram.com/rainbow.circuit/" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.youtube.com/@rainbowcircuit" target="_blank" rel="noopener">YouTube</a>
+                <a href="mailto:hey@rainbowcircuit.co">Email</a>
             </div>
         </footer>
     </section>
 
-
-</body>
     <script type="module" src="../shared/navigation.js"></script>
     <script type="module" src="../shared/button.js"></script>
+</body>
 </html>

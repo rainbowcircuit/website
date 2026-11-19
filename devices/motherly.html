@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rainbow Circuit | Motherly</title>
+    <meta name="description" content="Motherly is a percussion synthesizer with an eight-step sequencer and a semi-modular patch bay.">
+    <link rel="icon" href="../images/brand/logo_32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css?v=6">
+</head>
+<body class="device">
+    <header class="hero-nav">
+        <rc-home is-dark href="../index.html" size="80"></rc-home>
+        <rc-menu is-dark hide-text size="40"></rc-menu>
+    </header>
+    <picture class="hero-picture">
+        <source media="(max-width: 600px)" srcset="../images/webp/motherly/Motherly_website_1.1_vertical.webp">
+        <img src="../images/webp/motherly/Motherly_website_1.1.webp" class="hero" alt="Motherly">
+    </picture>
+
+    <section class="page">
+        <p>
+            Motherly is a percussion synthesizer with an eight-step sequencer and a semi-modular patch bay. It’s a love letter to
+            the DFAM — though more distant, more abstract — not quite <em>Mother</em>, just <em>motherly</em>. <br><br>
+
+            Its synth voice channels the character of acoustic membranes through extended FM synthesis: the snap of tension, the
+            rub of inharmonicity, the nuance of strike position. <br><br>
+
+            The semi-modular patch bay rewards curiosity with odd destinations — feedback loops, noisy almost audio rate
+            modulation, and routes for external control. <br><br>
+
+            Motherly features an extended FM synthesis voice with three operators and a filtered noise generator. <br><br>
+
+            While designed with simple controls, it includes a dedicated section for shaping the FM algorithm, giving you deeper
+            control over Motherly’s synth voice. It's just as easy to dial in subtle crumpling as it is to push into overt hissing
+            and thumping.
+        </p>
+
+        <img src="../images/webp/motherly/Motherly_patchbay_website.webp" alt="Motherly's semi-modular patch bay">
+        <h2>Endlessly New Patches</h2>
+        <p>
+            The semi-modular patch bay allows endless reconfiguration of the instrument itself. <br><br>
+
+            Knit gestures together by patching the pitch output into the tension input, and the step output into the tone
+            input. <br><br>
+
+            Pull the thread of almost audio rate modulation by filtering the noise generator to control rate, then patching that
+            into the noise level input. <br><br>
+
+            For extra fun, patch the mod-wheel output to the algorithm input, and let Motherly dictate the form beyond the eight
+            steps.
+        </p>
+
+        <p class="requirements">
+            Minimum Requirements:<br>
+            Windows: Windows 10 or 11<br>
+            Mac: macOS 10.14 or newer
+        </p>
+
+        <div class="button-row">
+            <rc-button label="Mac Demo" icon="demo" href="https://drive.google.com/file/d/1hA2yIAh8ySGHTFU5lHl7soso8xQEx4aj/view?usp=sharing"></rc-button>
+            <rc-button label="Windows Demo" icon="demo" href="https://drive.google.com/file/d/1xzIcs9pk7YI9iTHoe5Iu9Oyhvaior8eu/view?usp=share_link"></rc-button>
+            <rc-button label="Manual" icon="manual" href="https://cdn.prod.website-files.com/6240a005ce456341fca9aab7/68a0a044c3c1b8befed8af40_Motherly%20v1.1%20User%20Guide%20.pdf"></rc-button>
+            <rc-button label="Buy" icon="buy" price="$49" href="https://rainbowcircuit.lemonsqueezy.com/buy/6696a035-1c97-42ed-bea9-2cb9f434139f"></rc-button>
+        </div>
+
+        <p class="demo-note">
+            Demo versions have parameter saving disabled, and mute the audio every 40 seconds.<br>
+            For installation, please refer to the <a href="https://cdn.prod.website-files.com/6240a005ce456341fca9aab7/68a0a044c3c1b8befed8af40_Motherly%20v1.1%20User%20Guide%20.pdf" target="_blank" rel="noopener"><u>Motherly User Guide</u></a>.
+        </p>
+
+        <footer>
+            <p>&copy;2026 Rainbow Circuit</p>
+            <div class="links">
+                <a href="https://www.instagram.com/rainbow.circuit/" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.youtube.com/@rainbowcircuit" target="_blank" rel="noopener">YouTube</a>
+                <a href="mailto:hey@rainbowcircuit.co">Email</a>
+            </div>
+        </footer>
+    </section>
+
+    <script type="module" src="../shared/navigation.js"></script>
+    <script type="module" src="../shared/button.js"></script>
+</body>
+</html>

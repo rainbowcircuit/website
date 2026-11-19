@@ -316,3 +316,44 @@ export const drawBuy = (canvas, isDark = false, trigger = canvas, aux = {}) => {
 
     hoverAnimate(canvas, draw, 0.05, trigger)
 }
+
+export const drawDemo = (canvas, isDark = false, trigger = canvas) => {
+    const { ctx, w, h } = setupCanvas(canvas)
+
+    const draw = (hoverVal) => {
+        ctx.clearRect(0, 0, w, h)
+
+        const eased = hoverVal * hoverVal * (3 - 2 * hoverVal)
+        const drop = eased * h * 0.08
+        const cx = w / 2
+        const rad = Math.min(w, h) * 0.06
+
+        ctx.strokeStyle = isDark ? 'white' : 'black'
+        ctx.lineWidth = 1.5
+        ctx.lineCap = 'round'
+        ctx.lineJoin = 'round'
+
+        // tray
+        const left = w * 0.25, right = w * 0.75
+        const lip = h * 0.55, floor = h * 0.72
+        ctx.beginPath()
+        ctx.moveTo(left, lip)
+        ctx.arcTo(left, floor, cx, floor, rad)
+        ctx.arcTo(right, floor, right, lip, rad)
+        ctx.lineTo(right, lip)
+        ctx.stroke()
+
+        // arrow, dropping into the tray on hover
+        const tip = h * 0.56 + drop
+        const head = w * 0.1
+        ctx.beginPath()
+        ctx.moveTo(cx, h * 0.28 + drop * 0.5)
+        ctx.lineTo(cx, tip)
+        ctx.moveTo(cx - head, tip - head)
+        ctx.lineTo(cx, tip)
+        ctx.lineTo(cx + head, tip - head)
+        ctx.stroke()
+    }
+
+    hoverAnimate(canvas, draw, 0.05, trigger)
+}

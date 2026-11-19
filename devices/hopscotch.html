@@ -1,29 +1,90 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Rainbow Circuit | Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rainbow Circuit | Hopscotch</title>
+    <meta name="description" content="Hopscotch is a step sequencer and modulator Max for Live device.">
+    <link rel="icon" href="../images/brand/logo_32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css?v=6">
 </head>
+<body class="device">
+    <header class="hero-nav">
+        <rc-home is-dark href="../index.html" size="80"></rc-home>
+        <rc-menu is-dark hide-text size="40"></rc-menu>
+    </header>
+    <picture class="hero-picture">
+        <source media="(max-width: 600px)" srcset="../images/webp/hopscotch/hopscotch_1080x1350.webp">
+        <img src="../images/webp/hopscotch/hopscotch_1440x800.webp" class="hero" alt="Hopscotch">
+    </picture>
 
-<body>
-   
-    <rc-menu></rc-menu>
-    <img src="/images/hopscotch/hopscotch_1440x800.png">
+    <section class="page">
+        <p>
+            Hopscotch is a step sequencer and modulator Max for Live device. <br><br>
 
-    <p>
-    Hopscotch is a step sequencer and modulator Max for Live device.
-    <br>
-    Sequencers can do many things, a walking through pattern repetition and variation.
-    <br>
-    Hopscotch is jumping over dry chalk over asphalt — its architecture borrows from modular feedback techniques and no
-    input mixing for a a sequencer that drifts in and out, skips predictably at unpredictable intervals, and ricochets
-    violently on occasion.
-    <br>
-    Playing gentle or not, Hopscotch is a sequencer that pushes form forward — playing itself out into the unfamiliar in a
-    one-legged wobble, trying not to scrape its knees.
-    </p>
+            Sequencers can do many things, a walking through pattern repetition and variation. <br><br>
+
+            Hopscotch is jumping over dry chalk over asphalt — its architecture borrows from modular feedback techniques and no
+            input mixing for a a sequencer that drifts in and out, skips predictably at unpredictable intervals, and ricochets
+            violently on occasion. <br><br>
+
+            Playing gentle or not, Hopscotch is a sequencer that pushes form forward — playing itself out into the unfamiliar in a
+            one-legged wobble, trying not to scrape its knees.
+        </p>
+
+        <img src="../images/webp/hopscotch/website_image1.webp" alt="Hopscotch mapped to a parameter in Ableton Live">
+        <h2>A Reliable Modulator</h2>
+        <p>
+            The design of Hopscotches modulation system is in lockstep with Abletons modulation system. The control signals can be
+            used to modulate or override the mapped parameter.
+        </p>
+
+        <img src="../images/webp/hopscotch/website_image2.webp" alt="Hopscotch's click-and-drag step editor">
+        <h2>Off to the Unfamiliar</h2>
+        <p>
+            Hopscotch's editor provides an easy click-and-drag editor for a range of values, meaning that repetition of the sequences
+            can be exact or all kinds of varied. Alongside velocity and chance, Hopscotch makes it easy to stray out of the musically
+            familiar.
+        </p>
+
+        <h2>Feedback</h2>
+        <p>
+            Hopscotch has all kinds of little feedback mechanisms built in, and it’s what makes Hopscotch what it is. You can use it
+            to make different controls hold hands, or to make it grip knuckles white kind of hard. <br><br>
+
+            Feedback to the rate makes for musical drifting away from tempo. Feedback to the skip makes for some predictable
+            stepping, some unpredictable skipping. <br><br>
+
+            At its most extreme, the main feedback dial offsets the step sequencer position, which means violent ricocheting,
+            stuttered MIDI notes, and near-audio-rate control signal. The kind you get when you do no-input mixing — stable signal,
+            followed by some freaking out.
+        </p>
+
+        <p class="requirements">
+            Minimum Requirements:<br>
+            Windows: Windows 10 or 11<br>
+            Mac: macOS 10.14 or newer
+        </p>
+
+        <div class="button-row">
+            <rc-button label="Manual" icon="manual" href="https://cdn.prod.website-files.com/6240a005ce456341fca9aab7/69f8cef04732cde9f5ad2480_Hopscotch_User_Guide.pdf"></rc-button>
+            <rc-button label="Buy" icon="buy" price="$28" href="https://rainbowcircuit.lemonsqueezy.com/checkout/buy/2bb69a26-ed18-400e-8c61-f8c2920959dd"></rc-button>
+        </div>
+
+        <footer>
+            <p>&copy;2026 Rainbow Circuit</p>
+            <div class="links">
+                <a href="https://www.instagram.com/rainbow.circuit/" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.youtube.com/@rainbowcircuit" target="_blank" rel="noopener">YouTube</a>
+                <a href="mailto:hey@rainbowcircuit.co">Email</a>
+            </div>
+        </footer>
+    </section>
+
+    <script type="module" src="../shared/navigation.js"></script>
+    <script type="module" src="../shared/button.js"></script>
 </body>
-
-<script type="module" src="../shared/navigation.js"></script>
-
 </html>

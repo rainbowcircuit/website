@@ -58,7 +58,6 @@ class Menu extends LitElement {
     static properties = {
         isDark: { type: Boolean, attribute: "is-dark" },
         size: { type: Number },
-        width: { type: String },
         hideText: { type: Boolean, attribute: "hide-text" },
     }
 
@@ -66,19 +65,25 @@ class Menu extends LitElement {
         super()
         this.isDark = false
         this.size = 50
-        this.width = "auto"
         this.hideText = false
     }
 
     static styles = css`
         :host {
             display: block;
+            min-width: 0;
             font-family: 'Outfit', sans-serif;
         }
 
         .menu {
             display: flex;
             justify-content: space-around;
+        }
+
+        /* Icon-only header menu: right-aligned, spacing tightens as the window narrows */
+        .menu--icons {
+            justify-content: flex-end;
+            gap: clamp(16px, 5vw, 56px);
         }
 
         .menu-item {
@@ -98,7 +103,7 @@ class Menu extends LitElement {
 
     render() {
         return html`
-            <nav class="menu" style="width: ${this.width}">
+            <nav class="menu ${this.hideText ? "menu--icons" : ""}">
                 ${menuItems.map(({ id, label, href }) => html`
                     <a class="menu-item" href=${href} aria-label=${label}>
                         ${this.hideText ? "" : html`<p>${label}</p>`}

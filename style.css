@@ -18,7 +18,9 @@ a {
 }
 
 hr {
-    color: #eeeeee;
+    width: 100%;
+    border: 0;
+    border-top: 1px solid #eeeeee;
 }
 
 .hero {
@@ -49,28 +51,59 @@ hr {
 
 .page--wide {
     max-width: 910px;
+    margin-top: 20px;
 }
 
 .site-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 800px;
+    width: 100%;
+    max-width: 800px;
 }
 
 .site-header rc-menu {
     width: 300px;
 }
 
+.hero-picture {
+    display: block;
+}
+
+.prose {
+    max-width: 800px;
+}
+
+#about,
+#support {
+    max-width: 100%;
+    border-radius: 10px;
+    background-color: #f4f2f7;
+}
+
+.rounded {
+    border-radius: 10px;
+}
+
+.show-mobile {
+    display: none;
+}
+
+.about-title {
+    margin: 0;
+    font-weight: 400;
+    text-align: left;
+}
+
 .card-img,
 #about {
     display: block;
-    border-radius: 0px;
 }
 
 .card-img {
     width: 100%;
     height: auto;
+    border-radius: 10px;
 }
 
 .card-caption {
@@ -182,4 +215,141 @@ footer .links {
 
 .button-row + footer {
     margin-top: 0;
+}
+
+.install-paths {
+    padding-left: 1.5em;
+    margin: 0.5em 0 1em;
+}
+
+.install-paths li {
+    margin-bottom: 0.4em;
+}
+
+.faq-title {
+    font-weight: 500;
+}
+
+.faq h3 {
+    font-weight: 500;
+    font-size: 18px;
+    margin: 1.5em 0 0.5em;
+}
+
+.layout--text-wide > .intro {
+    flex: 1 1 auto;
+}
+
+.layout--text-wide > .feature {
+    flex: 0 0 300px;
+}
+
+/* ---- Device pages ---- */
+
+.device h2 {
+    margin: 48px 0 8px;
+}
+
+.device img + h2,
+.device h2:first-child {
+    margin-top: 24px;
+}
+
+.device .page img {
+    margin-top: 48px;
+}
+
+.device .caption {
+    margin-top: 12px;
+    color: #555555;
+}
+
+.requirements,
+.demo-note {
+    text-align: center;
+    color: #555555;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.requirements {
+    margin: 64px 0 0;
+}
+
+.requirements + .button-row {
+    margin-top: 32px;
+}
+
+.demo-note {
+    margin: -40px 0 64px;
+}
+
+/* ---- Mobile ---- */
+
+@media (max-width: 700px) {
+    .layout,
+    .layout--text-wide {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+    }
+
+    .layout > .intro,
+    .layout--text-wide > .feature,
+    .layout--text-wide > .intro {
+        flex: 1 1 auto;
+    }
+
+    .card-caption {
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 40px;
+    }
+
+    .card-caption > p:last-child,
+    .card-meta {
+        text-align: left;
+    }
+
+    .button-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
+        gap: 24px 16px;
+        margin: 48px 0;
+    }
+
+    .demo-note {
+        margin-top: -24px;
+    }
+
+    footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin-top: 64px;
+        padding: 40px 0 64px;
+    }
+
+    footer .links {
+        gap: 24px;
+    }
+
+    .hero-nav {
+        padding: 12px 16px;
+    }
+
+    .page {
+        padding: 16px 16px 0;
+    }
+
+    #about,
+    #support,
+    .hide-mobile {
+        display: none;
+    }
+
+    .show-mobile {
+        display: block;
+    }
 }

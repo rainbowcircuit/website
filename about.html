@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Rainbow Circuit | Home</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +20,8 @@
             </header>
 
             <canvas id="about" width="800" height="300"></canvas>
-            <p style="width: 800px">
+            <h1 class="show-mobile about-title">Building a Circuit of Imagination:</h1>
+            <p class="prose">
                 Rainbow Circuit ideates, codes and publishes instruments that propel creative technology, multiply musical colors, and
                 realize new potential for form. <br><br>
                 
@@ -36,9 +38,9 @@
         <footer>
             <p>&copy;2026 Rainbow Circuit</p>
             <div class="links">
-                <a href="apple.com">Instagram</a>
-                <a href="apple.com">Youtube</a>
-                <a href="apple.com">Email</a>
+                <a href="https://www.instagram.com/rainbow.circuit/" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.youtube.com/@rainbowcircuit" target="_blank" rel="noopener">YouTube</a>
+                <a href="mailto:hey@rainbowcircuit.co">Email</a>
             </div>
         </footer>
     </div>
@@ -49,15 +51,10 @@
 
         const canvas = document.getElementById("about");
         const ctx = canvas.getContext("2d");
-        const w = canvas.width, h = canvas.height
-
+        const MAX_WIDTH = canvas.width
         const dpr = Math.max(window.devicePixelRatio || 1, 2)
-        canvas.style.width = `${w}px`
-        canvas.style.height = `${h}px`
-        canvas.width = w * dpr
-        canvas.height = h * dpr
-        ctx.scale(dpr, dpr)
-        
+        let w = MAX_WIDTH, h = canvas.height
+
         let mouse = { state: 'idle', x: 0, y: 0, prevX: 0, prevY: 0, isClicked: false }        
         const text = "Building a Circuit of Imagination:"
         const colors = ['#E27B78', '#E09D75', '#E3B745', '#78E280', '#ABCEE1', '#787BE2', '#BB78E2']
@@ -116,31 +113,66 @@
 
             draw(ctx) {
                 ctx.font = font
+                ctx.fillStyle = 'black'
                 ctx.fillText(this.letter, this.pos.x, this.pos.y)
             }
         }
 
-        let fontSize = 35
-        ctx.font = ` ${fontSize}px Outfit, sans-serif`
-        const naturalWidth = ctx.measureText(text).width
-        if (naturalWidth > w * 0.9) {
-            fontSize = Math.floor(fontSize * (w * 0.9) / naturalWidth)
-        }
+        // Keep the font size fixed; on narrow screens wrap words onto more lines instead.
+        const fontSize = 35
         const font = `${fontSize}px Outfit, sans-serif`
-        ctx.font = font
+        const lineHeight = fontSize * 1.3
+        let chars = []
 
-        const totalWidth = ctx.measureText(text).width
-        const startX = (w - totalWidth) / 2
-        ctx.textBaseline = 'middle'
-        const chars = []
-        for(let i = 0; i < text.length; i++){
-            const x = startX + ctx.measureText(text.slice(0, i)).width
-            const y = h / 2
-            chars.push(new Character(text[i], x, y))
+        // Size the canvas to its container and lay the title out again.
+        const layout = () => {
+            w = Math.min(MAX_WIDTH, canvas.parentElement.clientWidth)
+            canvas.style.width = `${w}px`
+            canvas.style.height = `${h}px`
+            canvas.width = w * dpr
+            canvas.height = h * dpr
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+            ctx.font = font
+            ctx.textBaseline = 'middle'
+
+            const maxWidth = w * 0.9
+            const lines = []
+            for (const word of text.split(' ')) {
+                const last = lines[lines.length - 1]
+                if (last !== undefined && ctx.measureText(`${last} ${word}`).width <= maxWidth) {
+                    lines[lines.length - 1] = `${last} ${word}`
+                } else {
+                    lines.push(word)
+                }
+            }
+
+            chars = []
+            lines.forEach((line, row) => {
+                const startX = (w - ctx.measureText(line).width) / 2
+                const y = h / 2 + (row - (lines.length - 1) / 2) * lineHeight
+                for (let i = 0; i < line.length; i++) {
+                    const x = startX + ctx.measureText(line.slice(0, i)).width
+                    chars.push(new Character(line[i], x, y))
+                }
+            })
         }
+        layout()
+
+        let resizeQueued = false
+        window.addEventListener("resize", () => {
+            if (resizeQueued) return
+            resizeQueued = true
+            requestAnimationFrame(() => {
+                resizeQueued = false
+                const next = Math.min(MAX_WIDTH, canvas.parentElement.clientWidth)
+                if (next > 0 && next !== w) layout()
+            })
+        })
 
         const draw = () => {
             ctx.clearRect(0, 0, w, h)
+            ctx.fillStyle = '#efefef'
+            ctx.fillRect(0, 0, w, h)
 
             for (const char of chars) {
                 char.draw(ctx)

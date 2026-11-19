@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rainbow Circuit | Sands</title>
+    <meta name="description" content="Sands is a Max for Live device for reshaping your sound by simulating and then abusing old digital sampler technology.">
+    <link rel="icon" href="../images/brand/logo_32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css?v=6">
+</head>
+<body class="device">
+    <header class="hero-nav">
+        <rc-home is-dark href="../index.html" size="80"></rc-home>
+        <rc-menu is-dark hide-text size="40"></rc-menu>
+    </header>
+    <picture class="hero-picture">
+        <source media="(max-width: 600px)" srcset="../images/webp/sands/sands_vertical.webp">
+        <img src="../images/webp/sands/sands_horizontal.webp" class="hero" alt="Sands">
+    </picture>
+
+    <section class="page">
+        <p>
+            Sands is a Max For Live Device for reshaping your sound by simulating and then abusing old digital sampler
+            technology. <br><br>
+
+            Modeling the digital to analogue, and the analogue to digital converter of an 8-bit sampler, Sands scrambles, skips,
+            and inverts each bit to introduce mind-numbing violence to your signal. <br><br>
+
+            Claw sine waves apart, bellow up the noise floor, or shred drum loops into pieces.
+        </p>
+
+        <img src="../images/webp/sands/bitdepth.webp" alt="Bit depth diagram">
+        <h2>8-Bit What?</h2>
+        <p>
+            Samplers or any digital processor take analog audio in and convert that analog information into digital information
+            called <em>bits</em>. <br><br>
+
+            More bits allows us to make measurements of amplitude — from the quietest signal just above the noise floor, to the
+            loudest signal just before clipping. <br><br>
+
+            1-bit gives us two different measurements, 2-bit gives us four measurements, 3-bit gives us eight. Each bit doubling
+            the number of measurements. <br><br>
+
+            8-bits gives us 256 different measurements of a signals amplitude. <br><br>
+
+            Do nothing, and Sands can be used as a way to add a subtle noise floor.
+        </p>
+
+        <img src="../images/webp/sands/bitscramble.webp" alt="Sands bit-matrix">
+        <h2>In All The Wrong Places</h2>
+        <p>
+            Sands bit-matrix is your cockpit — allowing the patching of individual bits to the wrong places. <br><br>
+
+            Move bit-1 to the position of bit-8. Now the noise floor screams in your face. <br><br>
+
+            Move bit-6 to the position of bit-2, now it sounds a bit like FM. <br><br>
+
+            Move bit-3 to to the position of bit-4, bit-1 to the position of bit-7, turn off bit-2, and invert bit-6. Now it sounds
+            like a robot punching you in the face. <br><br>
+
+            Sands matrix modifiers allow easy shifting of entire columns and rows.
+        </p>
+
+        <img src="../images/webp/sands/filters.webp" alt="Sands filter response">
+        <h2>Flavorful Filters</h2>
+        <p>
+            Most samplers from the 80s used filters to prevent aliasing, a reconstruction error from digital back to analogue
+            audio. <br><br>
+
+            Sands too employs a modeled filter that starts as a high shelf filter, morphs into something resembling a band pass
+            filter, and then at the bottom of the range, becomes a high shelf filter again.
+        </p>
+
+        <img src="../images/webp/sands/unfolds.webp" alt="Unfolds">
+        <h2>Unfolds</h2>
+        <p>
+            Unfolds is a wave-unfolder and the younger sibling of Sands. Too activated to be part of Sands, Unfolds stands on its
+            own as a distinct device. <br><br>
+
+            We found that multiple instances of Unfolds can sound absolutely devastating—so we built five of them directly into the
+            device. It features a stereo-widening comb filter and a noise ring modulator, both using the same modeled filter found
+            in Sands. <br><br>
+
+            Unfolds is included with Sands.
+        </p>
+
+        <p class="caption">
+            Sands and Unfolds is co-developed by <a href="https://ryandanielpage.com" target="_blank" rel="noopener"><u>Dr. Ryan Page</u></a>
+            and Takuma Matsui.
+        </p>
+
+        <p class="requirements">
+            Minimum Requirements:<br>
+            Ableton Live 10, 11 &amp; 12 Suite or Standard with Max for Live installed.
+        </p>
+
+        <div class="button-row">
+            <rc-button label="Manual" icon="manual" href="https://cdn.prod.website-files.com/6240a005ce456341fca9aab7/67d17c6ad124ca745d57475f_Sands%20User%20Guide.pdf"></rc-button>
+            <rc-button label="Buy" icon="buy" price="$22" href="https://rainbowcircuit.lemonsqueezy.com/buy/65d49145-433a-4ac9-9d93-6fa360885e32"></rc-button>
+        </div>
+
+        <footer>
+            <p>&copy;2026 Rainbow Circuit</p>
+            <div class="links">
+                <a href="https://www.instagram.com/rainbow.circuit/" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.youtube.com/@rainbowcircuit" target="_blank" rel="noopener">YouTube</a>
+                <a href="mailto:hey@rainbowcircuit.co">Email</a>
+            </div>
+        </footer>
+    </section>
+
+    <script type="module" src="../shared/navigation.js"></script>
+    <script type="module" src="../shared/button.js"></script>
+</body>
+</html>
