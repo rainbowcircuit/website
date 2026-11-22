@@ -81,33 +81,11 @@ const PAGE_SIZE = 3
 class Products extends LitElement {
     static properties = {
         index: { type: Number },
-        descriptions: { state: true },
     }
 
     constructor() {
         super()
         this.index = 0
-        this.descriptions = {}
-    }
-
-    connectedCallback() {
-        super.connectedCallback()
-        this.loadDescriptions()
-    }
-
-    // Use each device page's <meta name="description"> as its tagline.
-    // External pages (e.g. Gleam) can't be fetched cross-origin, so they keep the hardcoded tagline.
-    async loadDescriptions() {
-        const local = products.filter((p) => !/^https?:/.test(p.href))
-        await Promise.all(local.map(async (p) => {
-            try {
-                const res = await fetch(link(p.href))
-                if (!res.ok) return
-                const doc = new DOMParser().parseFromString(await res.text(), "text/html")
-                const content = doc.querySelector('meta[name="description"]')?.content?.trim()
-                if (content) this.descriptions = { ...this.descriptions, [p.name]: content }
-            } catch {}
-        }))
     }
 
     next() {
@@ -131,7 +109,7 @@ class Products extends LitElement {
             <div class="card-caption" style=${i === visible.length - 1 ? "margin-bottom: 0px;" : ""}>
                 <div class="card-info">
                     <h1>${product.name} <span class="price">${product.price}</span></h1>
-                    <p>${this.descriptions[product.name] ?? product.tagline}</p>
+                    <p>${product.tagline}</p>
                 </div>
                 <div class="card-meta">
                     <p>${product.type}</p>

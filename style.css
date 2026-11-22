@@ -352,6 +352,14 @@ footer .links {
     .show-mobile {
         display: block;
     }
+
+    #logo {
+        align-self: center;
+    }
+
+    .intro-feature {
+        margin: 24px 0;
+    }
 }
 
 .pager {

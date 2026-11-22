@@ -1,0 +1,9 @@
+{
+  "name": "website",
+  "compatibility_date": "2026-11-19",
+  "assets": {
+    "directory": "./",
+    "html_handling": "auto-trailing-slash"
+  },
+  "observability": { "enabled": true }
+}
