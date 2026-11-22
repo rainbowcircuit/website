@@ -363,7 +363,7 @@ footer .links {
     }
 
     #support-mobile-slot #support {
-        display: inline-block;
+        display: block;
     }
 }
 

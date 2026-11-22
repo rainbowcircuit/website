@@ -4,14 +4,21 @@ await document.fonts.load("35px Outfit")
 
 const canvas = document.getElementById("support")
 const ctx = canvas.getContext("2d")
-const w = canvas.width, h = canvas.height
+const baseWidth = canvas.width
+const h = canvas.height
+let w = baseWidth
 
 const dpr = Math.max(window.devicePixelRatio || 1, 2)
-canvas.style.width = `${w}px`
-canvas.style.height = `${h}px`
-canvas.width = w * dpr
-canvas.height = h * dpr
-ctx.scale(dpr, dpr)
+
+const setWidth = (width) => {
+    w = width
+    canvas.style.width = `${w}px`
+    canvas.style.height = `${h}px`
+    canvas.width = w * dpr
+    canvas.height = h * dpr
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+}
+setWidth(baseWidth)
 
 class Plane {
     constructor() {
@@ -102,15 +109,18 @@ canvas.addEventListener('click', (e) => {
     }
 })
 
-// On mobile, move the canvas up under the email line; move it back on desktop.
 const desktopParent = canvas.parentElement
 const mobileSlot = document.getElementById("support-mobile-slot")
 const mobileQuery = window.matchMedia("(max-width: 700px)")
 const placeCanvas = () => {
     const target = mobileQuery.matches && mobileSlot ? mobileSlot : desktopParent
     if (canvas.parentElement !== target) target.appendChild(canvas)
+
+    const width = target === mobileSlot ? Math.round(mobileSlot.clientWidth) : baseWidth
+    if (width > 0 && width !== w) setWidth(width)
 }
 mobileQuery.addEventListener("change", placeCanvas)
+window.addEventListener("resize", placeCanvas)
 placeCanvas()
 
 const tick = () => {
