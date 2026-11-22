@@ -62,8 +62,14 @@ hr {
     max-width: 800px;
 }
 
-.site-header rc-menu {
-    width: 300px;
+/* rc-menu with `home` draws the logo and the menu, so it spans the whole header */
+.site-header rc-menu,
+.hero-nav rc-menu {
+    flex: 1;
+}
+
+.hero-nav rc-menu {
+    --menu-align: flex-start;
 }
 
 .hero-picture {

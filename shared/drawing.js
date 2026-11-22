@@ -10,7 +10,7 @@ export const setupCanvas = (canvas) => {
     return { ctx, w, h };
 };
 
-const hoverAnimate = (canvas, draw, speed = 0.05, trigger = canvas) => {
+const hoverAnimate = (canvas, draw, speed = 0.05, trigger = canvas, leaveSpeed = speed) => {
     let mouseState = "idle"
     let hoverVal = 0
 
@@ -21,7 +21,7 @@ const hoverAnimate = (canvas, draw, speed = 0.05, trigger = canvas) => {
             draw(hoverVal)
             if (hoverVal < 1) requestAnimationFrame(tick)
         } else if (mouseState === "leave") {
-            hoverVal = Math.max(0, hoverVal - speed)
+            hoverVal = Math.max(0, hoverVal - leaveSpeed)
             draw(hoverVal)
             if (hoverVal > 0) requestAnimationFrame(tick)
         }
@@ -37,58 +37,55 @@ const hoverAnimate = (canvas, draw, speed = 0.05, trigger = canvas) => {
     trigger.addEventListener("mouseleave", () => setState("leave"))
 }
 
-export const drawLogo = (canvas, isDark = false, outline = false) => {
-    const { ctx, w, h } = setupCanvas(canvas);
+// R and C letter shapes shared by the logo and the home button; hoverVal pulls them together
+const logoPaths = (w, h, hoverVal) => {
+    const norm = Math.sin(hoverVal * Math.PI / 2)
+    const cxR = w * 0.325 + (w * 0.025 * norm)
+    const cxC = w * 0.675 - (w * 0.025 * norm)
+    const cy = h / 2
+    const letterSize = w * 0.45
+    const dimpleSize = letterSize * 0.1
+    const half = letterSize / 2
+    const top = cy - half, bottom = cy + half
 
-    let mouseState = false
-    let normMotion = 0;
+    // R
+    const pathR = new Path2D()
+    pathR.moveTo(cxR, top)
+    pathR.arc(cxR, cy, half, Math.PI * 1.5, Math.PI * 2, false)
 
-    const draw = () => {
-        ctx.clearRect(0, 0, w, h);
+    pathR.arcTo(cxR + half, bottom, cxR + dimpleSize, bottom, dimpleSize)
+    pathR.arcTo(cxR + dimpleSize, bottom, cxR, bottom - dimpleSize, dimpleSize)
+    pathR.lineTo(cxR, bottom - dimpleSize)
+    pathR.arcTo(cxR - dimpleSize, bottom, cxR - half, bottom, dimpleSize)
 
-        // drawR
-        const norm = Math.sin(normMotion * Math.PI / 2)
-        const cxR = w * 0.325 + (w * 0.025 * norm)
-        const cxC = w * 0.675 - (w * 0.025 * norm)
-        const cy = h / 2
-        const letterSize = w * 0.45
-        const dimpleSize = letterSize * 0.1;
-        const half = letterSize / 2
-        const top = cy - half, bottom = cy + half
+    pathR.arcTo(cxR - half, bottom, cxR - half, top, dimpleSize)
+    pathR.arcTo(cxR - half, top, cxR, top, dimpleSize)
+    pathR.closePath()
 
-        const pathR = new Path2D()
-        pathR.moveTo(cxR, top)
-        pathR.arc(cxR, cy, half, Math.PI * 1.5, Math.PI * 2, false)
+    // C
+    const pathC = new Path2D()
+    pathC.moveTo(cxC, bottom)
+    pathC.arc(cxC, cy, half, Math.PI * 0.5, Math.PI * 1.5, false)
 
-        pathR.arcTo(cxR + half, bottom, cxR + dimpleSize, bottom, dimpleSize)
-        pathR.arcTo(cxR + dimpleSize, bottom, cxR, bottom - dimpleSize, dimpleSize)
-        pathR.lineTo(cxR, bottom - dimpleSize)
-        pathR.arcTo(cxR - dimpleSize, bottom, cxR - half, bottom, dimpleSize)
+    pathC.arcTo(cxC + half, top, cxC + half, cy - dimpleSize, dimpleSize)
+    pathC.arcTo(cxC + half, cy - dimpleSize, cxC + half - dimpleSize, cy, dimpleSize)
+    pathC.lineTo(cxC + half - dimpleSize, cy)
+    pathC.arcTo(cxC + half, cy + dimpleSize, cxC + half, bottom, dimpleSize)
 
-        pathR.arcTo(cxR - half, bottom, cxR - half, top, dimpleSize)
-        pathR.arcTo(cxR - half, top, cxR, top, dimpleSize)
-        pathR.closePath()
+    pathC.arcTo(cxC + half, bottom, cxC, bottom, dimpleSize)
+    pathC.closePath()
 
-        // draw C
-        const pathC = new Path2D()
-        pathC.moveTo(cxC, bottom)
-        pathC.arc(cxC, cy, half, Math.PI * 0.5, Math.PI * 1.5, false)
+    return { pathR, pathC }
+}
 
-        pathC.arcTo(cxC + half, top, cxC + half, cy - dimpleSize, dimpleSize)
-        pathC.arcTo(cxC + half, cy - dimpleSize, cxC + half - dimpleSize, cy, dimpleSize)
-        pathC.lineTo(cxC + half - dimpleSize, cy)
-        pathC.arcTo(cxC + half, cy + dimpleSize, cxC + half, bottom, dimpleSize)
+// Filled logo: a standalone canvas drawing, not a button
+export const drawLogo = (canvas, aux = {}) => {
+    const { isDark = false } = aux
+    const { ctx, w, h } = setupCanvas(canvas)
 
-        pathC.arcTo(cxC + half, bottom, cxC, bottom, dimpleSize)
-        pathC.closePath()
-
-        if (outline) {
-            ctx.strokeStyle = isDark ? 'white' : 'black'
-            ctx.lineWidth = 1.5
-            ctx.stroke(pathR)
-            ctx.stroke(pathC)
-            return
-        }
+    const draw = (hoverVal) => {
+        ctx.clearRect(0, 0, w, h)
+        const { pathR, pathC } = logoPaths(w, h, hoverVal)
 
         ctx.fillStyle = isDark ? 'white' : 'black'
         ctx.fill(pathR)
@@ -102,38 +99,30 @@ export const drawLogo = (canvas, isDark = false, outline = false) => {
         ctx.fillRect(0, 0, w, h)
         ctx.restore()
     }
-    draw();
 
-    const animation = () => {
-        if (mouseState === "enter") {
-            normMotion += 0.05
-            if (normMotion >= 1) normMotion = 1;
-            draw();
-            requestAnimationFrame(animation);
-
-        } else if (mouseState === "leave") {
-            normMotion -= 0.015
-            if (normMotion <= 0) {
-                normMotion = 0;
-                mouseState = "idle"
-            }
-            draw();
-            requestAnimationFrame(animation);
-        }
-    }
-
-    canvas.addEventListener("mouseover", () => {
-        mouseState = "enter";
-        animation()
-    })
-
-    canvas.addEventListener("mouseleave", () => {
-        mouseState = "leave";
-        animation()
-    })
+    hoverAnimate(canvas, draw, 0.05, canvas, 0.015)
 }
 
-export const drawAbout = (canvas, isDark = false) => {
+// Outlined logo for the home button
+export const drawHome = (canvas, trigger = canvas, aux = {}) => {
+    const { isDark = false } = aux
+    const { ctx, w, h } = setupCanvas(canvas)
+
+    const draw = (hoverVal) => {
+        ctx.clearRect(0, 0, w, h)
+        const { pathR, pathC } = logoPaths(w, h, hoverVal)
+
+        ctx.strokeStyle = isDark ? 'white' : 'black'
+        ctx.lineWidth = 1.5
+        ctx.stroke(pathR)
+        ctx.stroke(pathC)
+    }
+
+    hoverAnimate(canvas, draw, 0.05, trigger, 0.015)
+}
+
+export const drawAbout = (canvas, trigger = canvas, aux = {}) => {
+    const { isDark = false } = aux
     const { ctx, w, h } = setupCanvas(canvas)
 
     const draw = (hoverVal) => {
@@ -163,10 +152,11 @@ export const drawAbout = (canvas, isDark = false) => {
         ctx.fill()
     }
 
-    hoverAnimate(canvas, draw)
+    hoverAnimate(canvas, draw, 0.05, trigger)
 }
 
-export const drawDevices = (canvas, isDark = false) => {
+export const drawDevices = (canvas, trigger = canvas, aux = {}) => {
+    const { isDark = false } = aux
     const { ctx, w, h } = setupCanvas(canvas)
 
     const draw = (hoverVal) => {
@@ -199,10 +189,11 @@ export const drawDevices = (canvas, isDark = false) => {
         ctx.fill()
     }
 
-    hoverAnimate(canvas, draw)
+    hoverAnimate(canvas, draw, 0.05, trigger)
 }
 
-export const drawSupport = (canvas, isDark = false) => {
+export const drawSupport = (canvas, trigger = canvas, aux = {}) => {
+    const { isDark = false } = aux
     const { ctx, w, h } = setupCanvas(canvas)
 
     const draw = (hoverVal) => {
@@ -234,10 +225,11 @@ export const drawSupport = (canvas, isDark = false) => {
         ctx.restore()
     }
 
-    hoverAnimate(canvas, draw)
+    hoverAnimate(canvas, draw, 0.05, trigger)
 }
 
-export const drawManual = (canvas, isDark = false, trigger = canvas) => {
+export const drawManual = (canvas, trigger = canvas, aux = {}) => {
+    const { isDark = false } = aux
     const { ctx, w, h } = setupCanvas(canvas)
 
     const draw = (hoverVal) => {
@@ -271,7 +263,8 @@ export const drawManual = (canvas, isDark = false, trigger = canvas) => {
 }
 
 
-export const drawBuy = (canvas, isDark = false, trigger = canvas, aux = {}) => {
+export const drawBuy = (canvas, trigger = canvas, aux = {}) => {
+    const { isDark = false, price } = aux
     const { ctx, w, h } = setupCanvas(canvas)
 
     const draw = (hoverVal) => {
@@ -306,18 +299,19 @@ export const drawBuy = (canvas, isDark = false, trigger = canvas, aux = {}) => {
         ctx.fillStyle = isDark ? 'white' : 'black'
         ctx.fill()
 
-        if (aux.price) {
+        if (price) {
             ctx.font = `${Math.round(h * 0.185)}px 'Outfit', sans-serif`
             ctx.textAlign = 'center'
             ctx.textBaseline = 'middle'
-            ctx.fillText(aux.price, (coords.bl.x + coords.br.x - rad * 0.5) / 2, (coords.tl.y + coords.bl.y) / 2)
+            ctx.fillText(price, (coords.bl.x + coords.br.x - rad * 0.5) / 2, (coords.tl.y + coords.bl.y) / 2)
         }
     }
 
     hoverAnimate(canvas, draw, 0.05, trigger)
 }
 
-export const drawDemo = (canvas, isDark = false, trigger = canvas) => {
+export const drawDemo = (canvas, trigger = canvas, aux = {}) => {
+    const { isDark = false } = aux
     const { ctx, w, h } = setupCanvas(canvas)
 
     const draw = (hoverVal) => {

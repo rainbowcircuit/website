@@ -13,7 +13,7 @@
     <div class="page page--wide">
         <main class="layout">
             <header class="site-header show-mobile">
-                <rc-home size="80"></rc-home>
+                <rc-button icon="home" label="Rainbow Circuit home" hide-label same-tab href="index.html" size="80"></rc-button>
             </header>
 
             <section class="feature hide-mobile">
@@ -48,6 +48,7 @@
     </div>
 
     <script type="module" src="./shared/navigation.js"></script>
+    <script type="module" src="./shared/button.js"></script>
     <script type="module">
         import { drawLogo } from './shared/drawing.js'
         drawLogo(document.getElementById('logo'))
