@@ -344,7 +344,6 @@ footer .links {
     }
 
     #about,
-    #support,
     .hide-mobile {
         display: none;
     }
@@ -359,6 +358,15 @@ footer .links {
 
     .intro-feature {
         margin: 24px 0;
+    }
+
+    #support-mobile-slot {
+        margin: 24px 0;
+        text-align: center;
+    }
+
+    #support-mobile-slot #support {
+        display: inline-block;
     }
 }
 

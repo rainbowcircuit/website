@@ -102,6 +102,17 @@ canvas.addEventListener('click', (e) => {
     }
 })
 
+// On mobile, move the canvas up under the email line; move it back on desktop.
+const desktopParent = canvas.parentElement
+const mobileSlot = document.getElementById("support-mobile-slot")
+const mobileQuery = window.matchMedia("(max-width: 700px)")
+const placeCanvas = () => {
+    const target = mobileQuery.matches && mobileSlot ? mobileSlot : desktopParent
+    if (canvas.parentElement !== target) target.appendChild(canvas)
+}
+mobileQuery.addEventListener("change", placeCanvas)
+placeCanvas()
+
 const tick = () => {
     draw()
     requestAnimationFrame(tick)
