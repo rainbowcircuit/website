@@ -1,7 +1,6 @@
 import { LitElement, html, css, nothing } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm'
 import { drawHome, drawAbout, drawDevices, drawSupport, drawManual, drawBuy, drawDemo } from './drawing.js'
 
-// aspect = canvas width / height
 const icons = {
     home: { draw: drawHome, aspect: 1.9 },
     about: { draw: drawAbout },

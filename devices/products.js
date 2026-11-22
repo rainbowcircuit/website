@@ -104,6 +104,7 @@ class Products extends LitElement {
         const visible = products.slice(this.index, this.index + PAGE_SIZE)
         const atStart = this.index === 0
         const atEnd = this.index + PAGE_SIZE >= products.length
+        
         return html`${visible.map((product, i) => html`
             <a href=${link(product.href)}><img class="card-img" src=${link(product.image)} alt=${product.name}></a>
             <div class="card-caption" style=${i === visible.length - 1 ? "margin-bottom: 0px;" : ""}>
