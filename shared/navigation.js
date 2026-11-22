@@ -1,7 +1,6 @@
 import { LitElement, html, css } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm'
 import { drawLogo, drawAbout, drawDevices, drawSupport } from './drawing.js'
 
-// Resolve links relative to this file (shared/), so they work from any page depth.
 const link = (path) => new URL(`../${path}`, import.meta.url).href
 
 const LOGO_WIDTH_PER_HEIGHT = 1.9

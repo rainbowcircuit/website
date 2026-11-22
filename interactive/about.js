@@ -1,0 +1,147 @@
+import { Vector } from './vector.js'
+
+await document.fonts.load("55px Outfit")
+
+const canvas = document.getElementById("about")
+const ctx = canvas.getContext("2d")
+const MAX_WIDTH = canvas.width
+const dpr = Math.max(window.devicePixelRatio || 1, 2)
+let w = MAX_WIDTH, h = canvas.height
+
+let mouse = { state: 'idle', x: 0, y: 0, prevX: 0, prevY: 0, isClicked: false }
+const text = "Building a Circuit of Imagination:"
+const colors = ['#E27B78', '#E09D75', '#E3B745', '#78E280', '#ABCEE1', '#787BE2', '#BB78E2']
+
+class Character {
+    constructor(letter, x, y) {
+        this.letter = letter
+        this.origin = new Vector(x, y)
+        this.pos = new Vector(x, y)
+        this.vel = new Vector(0, 0)
+        this.accel = new Vector(0, 0)
+    }
+
+    reset() {
+        this.pos.x = this.origin.x
+        this.pos.y = this.origin.y
+    }
+
+    push(fx, fy) {
+        this.accel.x += fx
+        this.accel.y += fy
+    }
+
+    update() {
+        this.pos.add(this.vel)
+        if (this.pos.x >= w - fontSize || this.pos.x < fontSize) {
+            this.vel.mult(-1)
+        }
+        if (this.pos.y >= h - fontSize || this.pos.y < fontSize) {
+            this.vel.mult(-1)
+        }
+
+        this.pos.add(this.vel)
+        this.vel.add(this.accel)
+        this.vel.mult(0.95) // friction so motion settles
+        this.accel.mult(0.85)
+    }
+
+    draw(ctx) {
+        ctx.font = font
+        ctx.fillStyle = 'black'
+        ctx.fillText(this.letter, this.pos.x, this.pos.y)
+    }
+}
+
+const fontSize = 35
+const font = `${fontSize}px Outfit, sans-serif`
+const lineHeight = fontSize * 1.3
+let chars = []
+
+const layout = () => {
+    w = Math.min(MAX_WIDTH, canvas.parentElement.clientWidth)
+    canvas.style.width = `${w}px`
+    canvas.style.height = `${h}px`
+    canvas.width = w * dpr
+    canvas.height = h * dpr
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    ctx.font = font
+    ctx.textBaseline = 'middle'
+
+    const maxWidth = w * 0.9
+    const lines = []
+    for (const word of text.split(' ')) {
+        const last = lines[lines.length - 1]
+        if (last !== undefined && ctx.measureText(`${last} ${word}`).width <= maxWidth) {
+            lines[lines.length - 1] = `${last} ${word}`
+        } else {
+            lines.push(word)
+        }
+    }
+
+    chars = []
+    lines.forEach((line, row) => {
+        const startX = (w - ctx.measureText(line).width) / 2
+        const y = h / 2 + (row - (lines.length - 1) / 2) * lineHeight
+        for (let i = 0; i < line.length; i++) {
+            const x = startX + ctx.measureText(line.slice(0, i)).width
+            chars.push(new Character(line[i], x, y))
+        }
+    })
+}
+layout()
+
+let resizeQueued = false
+window.addEventListener("resize", () => {
+    if (resizeQueued) return
+    resizeQueued = true
+    requestAnimationFrame(() => {
+        resizeQueued = false
+        const next = Math.min(MAX_WIDTH, canvas.parentElement.clientWidth)
+        if (next > 0 && next !== w) layout()
+    })
+})
+
+const draw = () => {
+    ctx.clearRect(0, 0, w, h)
+    ctx.fillStyle = '#efefef'
+    ctx.fillRect(0, 0, w, h)
+
+    for (const char of chars) {
+        char.draw(ctx)
+        char.update()
+    }
+}
+
+const tick = () => {
+    draw()
+    requestAnimationFrame(tick)
+}
+tick()
+
+canvas.addEventListener("mousedown", (e) => {
+    for (const char of chars) {
+        char.reset()
+        char.vel.x = (Math.random() - 0.5) * 0.5
+        char.vel.y = (Math.random() - 0.5) * 0.5
+    }
+    mouse.state = 'drag'
+    mouse.prevX = e.offsetX
+    mouse.prevY = e.offsetY
+})
+
+canvas.addEventListener("mousemove", (e) => {
+    const x = e.offsetX, y = e.offsetY
+    if (mouse.state === 'drag') {
+        const strength = 0.005
+        for (const char of chars) {
+            char.push((x - mouse.prevX) * strength, (y - mouse.prevY) * strength)
+        }
+    }
+    mouse.prevX = x
+    mouse.prevY = y
+})
+
+window.addEventListener("mouseup", () => {
+    mouse.state = 'idle'
+})

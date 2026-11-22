@@ -353,3 +353,24 @@ footer .links {
         display: block;
     }
 }
+
+.pager {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+.pager a {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px;
+}
+
+.pager svg {
+    display: block;
+}
+
+.pager a[hidden] {
+    display: inline-flex;
+    visibility: hidden;
+}
